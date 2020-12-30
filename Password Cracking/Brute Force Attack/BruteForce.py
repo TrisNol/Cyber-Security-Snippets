@@ -1,11 +1,11 @@
 import hashlib
 from itertools import product
 
-def brute_force(characters, length, password_hash):
+def brute_force(characters, length, password_hash, hash_algorithm=hashlib.md5):
     for i in range(length + 1):
         for attempt in product(characters, repeat=i):
             password = ''.join(attempt)
-            digest = hashlib.md5(password.encode()).hexdigest()
+            digest = hash_algorithm(password.encode()).hexdigest()
 
             if digest.strip() == password_hash.strip():
                 return password

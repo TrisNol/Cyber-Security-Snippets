@@ -1,9 +1,9 @@
 import hashlib
 
-def dictionaryAttack(password_hash, dictionary):
+def dictionaryAttack(password_hash, dictionary, hash_algorithm=hashlib.md5):
     for word in dictionary:
         enc_wrd = word.encode('utf-8')
-        digest = hashlib.md5(enc_wrd.strip()).hexdigest()
+        digest = hash_algorithm(enc_wrd.strip()).hexdigest()
 
         if digest.strip() == password_hash.strip():
             return word
@@ -12,9 +12,9 @@ def dictionaryAttack(password_hash, dictionary):
 
 if __name__ == "__main__":
     password = "12345"
-    pass_hash = hashlib.md5(password.encode()).hexdigest()
+    pass_hash = hashlib.sha256(password.encode()).hexdigest()
 
-    pw = dictionaryAttack(pass_hash, open('./passwords.txt', 'r'))
+    pw = dictionaryAttack(pass_hash, open('./passwords.txt', 'r'), hash_algorithm=hashlib.sha256)
     if pw is not None:
         print('Password is: ' + pw)
     else:
