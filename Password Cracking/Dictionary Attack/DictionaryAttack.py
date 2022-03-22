@@ -14,8 +14,9 @@ if __name__ == "__main__":
     password = "12345"
     pass_hash = hashlib.sha256(password.encode()).hexdigest()
 
-    pw = dictionaryAttack(pass_hash, open('./passwords.txt', 'r'), hash_algorithm=hashlib.sha256)
-    if pw is not None:
-        print('Password is: ' + pw)
-    else:
-        print('Password not found')
+    with open('./passwords.txt', 'r') as text:
+        pw = dictionaryAttack(pass_hash, text, hash_algorithm=hashlib.sha256)
+        if pw is not None:
+            print('Password is: ' + pw)
+        else:
+            print('Password not found')
